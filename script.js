@@ -1,21 +1,42 @@
-function submitOrder(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    const products = document.querySelectorAll('.product');
+    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+    const confirmationMessage = document.getElementById('confirmationMessage');
+    let cart = [];
 
-    const phone = document.getElementById('phone').value;
-    const product = document.getElementById('product').value;
+    products.forEach(product => {
+        const addToCartBtn = product.querySelector('.add-to-cart');
+        const productName = product.dataset.product;
 
-    // Send email notification
-    sendEmailNotification(phone, product);
+        addToCartBtn.addEventListener('click', () => {
+            cart.push(productName);
+            updateCartButton();
+        });
+    });
 
-    // Redirect to thank you page
-    window.location.href = `thankyou.html?product=${encodeURIComponent(product)}`;
-}
+    confirmOrderBtn.addEventListener('click', () => {
+        confirmOrder();
+    });
 
-function sendEmailNotification(phone, product) {
-    const email = "trc.for.everyone.in.life@gmail.com";
-    const subject = "New Plushie Order";
-    const body = `A new order has been placed.\n\nProduct: ${product}\nPhone Number: ${phone}\n\nPlease arrange the meeting.`;
+    function updateCartButton() {
+        if (cart.length > 0) {
+            confirmOrderBtn.disabled = false;
+        } else {
+            confirmOrderBtn.disabled = true;
+        }
+    }
 
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+    function confirmOrder() {
+        // Clear cart and disable button
+        cart = [];
+        updateCartButton();
 
+        // Show confirmation message
+        confirmationMessage.style.display = 'block';
+        confirmationMessage.innerHTML = `
+            <p>Your order will be ready in two days at 6:00 PM.</p>
+            <p>Please come to Funabori, Tokyo, Edogawa-ku, Sports Park.</p>
+            <p>Thank you for shopping with us!</p>
+        `;
+    }
+});
