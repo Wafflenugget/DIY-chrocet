@@ -24,12 +24,14 @@
 <body>
     <h1>Welcome to Our Plushie Shop!</h1>
     <div class="product">
-        <img src="penguin.jpg" alt="Crocheted Penguin">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXfgrDg5FvxZqmSOj612vp-wFH57sKfn98SA&usqp=CAU" alt="Crocheted Penguin">
         <div class="product-title">Crocheted Penguin</div>
         <p> 500¥ </p>
         <form id="orderForm">
             <label for="phone">Your Phone Number:</label>
             <input type="tel" id="phone" name="phone" required>
+             <label for="email">Your Email:</label>
+            <input type="tel" id="email" name="email" required>
             <input type="hidden" id="product" name="product" value="Crocheted Penguin">
             <button type="button" onclick="submitOrder()">Buy Now</button>
         </form>
