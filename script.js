@@ -1,4 +1,4 @@
-document.getElementById('orderForm').addEventListener('submit', function(event) {
+function submitOrder(event) {
     event.preventDefault();
 
     const phone = document.getElementById('phone').value;
@@ -9,7 +9,7 @@ document.getElementById('orderForm').addEventListener('submit', function(event) 
 
     // Redirect to thank you page
     window.location.href = `thankyou.html?product=${encodeURIComponent(product)}`;
-});
+}
 
 function sendEmailNotification(phone, product) {
     const email = "trc.for.everyone.in.life@gmail.com";
@@ -18,3 +18,4 @@ function sendEmailNotification(phone, product) {
 
     window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+
