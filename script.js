@@ -1,42 +1,31 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const products = document.querySelectorAll('.product');
-    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
-    const confirmationMessage = document.getElementById('confirmationMessage');
-    let cart = [];
+const AWS = require('aws-sdk');
+const ses = new AWS.SES();
 
-    products.forEach(product => {
-        const addToCartBtn = product.querySelector('.add-to-cart');
-        const productName = product.dataset.product;
+exports.handler = async (event) => {
+    const { customerName, customerEmail, productName } = JSON.parse(event.body);
 
-        addToCartBtn.addEventListener('click', () => {
-            cart.push(productName);
-            updateCartButton();
-        });
-    });
+    // Construct email parameters
+    const params = {
+        Destination: {
+            ToAddresses: [customerEmail]
+        },
+        Message: {
+            Body: {
+                Text: {
+                    Data: `Dear ${customerName},\n\nThank you for purchasing ${productName}!\n\nBest regards,\nYour Plushie Shop`
+                }
+            },
+            Subject: {
+                Data: 'Order Confirmation from Your Plushie Shop'
+            }
+        },
+        Source: 'your@email.com' // Replace with your verified email address in AWS SES
+    };
 
-    confirmOrderBtn.addEventListener('click', () => {
-        confirmOrder();
-    });
-
-    function updateCartButton() {
-        if (cart.length > 0) {
-            confirmOrderBtn.disabled = false;
-        } else {
-            confirmOrderBtn.disabled = true;
-        }
+    try {
+        await ses.sendEmail(params).promise();
+        return { statusCode: 200, body: 'Email sent successfully!' };
+    } catch (error) {
+        return { statusCode: 500, body: error.message };
     }
-
-    function confirmOrder() {
-        // Clear cart and disable button
-        cart = [];
-        updateCartButton();
-
-        // Show confirmation message
-        confirmationMessage.style.display = 'block';
-        confirmationMessage.innerHTML = `
-            <p>Your order will be ready in two days at 6:00 PM.</p>
-            <p>Please come to Funabori, Tokyo, Edogawa-ku, Sports Park.</p>
-            <p>Thank you for shopping with us!</p>
-        `;
-    }
-});
+};
