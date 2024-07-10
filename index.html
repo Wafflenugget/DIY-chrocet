@@ -1,1 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plushie Shop</title>
+    <style>
+        .product {
+            border: 1px solid #ccc;
+            padding: 16px;
+            margin: 16px;
+            text-align: center;
+        }
+        .product img {
+            max-width: 200px;
+            height: auto;
+        }
+        .product-title {
+            font-size: 24px;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Our Plushie Shop!</h1>
+    <div class="product">
+        <img src="penguin.jpg" alt="Crocheted Penguin">
+        <div class="product-title">Crocheted Penguin</div>
+        <p> 500¥ </p>
+        <form id="orderForm">
+            <label for="phone">Your Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+            <input type="hidden" id="product" name="product" value="Crocheted Penguin">
+            <button type="button" onclick="submitOrder()">Buy Now</button>
+        </form>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
 
