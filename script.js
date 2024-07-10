@@ -19,7 +19,7 @@ exports.handler = async (event) => {
                 Data: 'Order Confirmation from Your Plushie Shop'
             }
         },
-        Source: 'your@email.com' // Replace with your verified email address in AWS SES
+        Source: 'trc.for.everyone.in.life@gmail.com' // Replace with your verified email address in AWS SES
     };
 
     try {
