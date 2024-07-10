@@ -24,20 +24,38 @@
 <body>
     <h1>Welcome to Our Plushie Shop!</h1>
     <div class="product">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXfgrDg5FvxZqmSOj612vp-wFH57sKfn98SA&usqp=CAU" alt="Crocheted Penguin">
+        <img src="penguin.jpg" alt="Crocheted Penguin">
         <div class="product-title">Crocheted Penguin</div>
-        <p> 500¥ </p>
-        <form id="orderForm">
+        <form id="orderForm" action="thankyou.html" method="POST">
             <label for="phone">Your Phone Number:</label>
             <input type="tel" id="phone" name="phone" required>
-             <label for="email">Your Email:</label>
-            <input type="tel" id="email" name="email" required>
             <input type="hidden" id="product" name="product" value="Crocheted Penguin">
-            <button type="button" onclick="submitOrder()">Buy Now</button>
+            <button type="submit">Buy Now</button>
         </form>
     </div>
-
-    <script src="scripts.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You!</title>
+</head>
+<body>
+    <h1>Thank You for Your Purchase!</h1>
+    <p id="confirmationMessage"></p>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const product = urlParams.get('product');
+
+        // Display confirmation message
+        const messageElement = document.getElementById('confirmationMessage');
+        messageElement.textContent = `Thank you for your purchase! We will meet you in two days at 6:00 PM to deliver your ${product}.`;
+    </script>
+</body>
+</html>
+
 
