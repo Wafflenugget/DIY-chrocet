@@ -5,57 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plushie Shop</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+        }
         .product {
             border: 1px solid #ccc;
             padding: 16px;
-            margin: 16px;
-            text-align: center;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
         }
         .product img {
-            max-width: 200px;
+            max-width: 100px;
             height: auto;
+            margin-right: 20px;
         }
-        .product-title {
-            font-size: 24px;
-            margin: 8px 0;
+        .product-info {
+            flex: 1;
+        }
+        .cart {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1000;
+        }
+        .cart button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .cart button:hover {
+            background-color: #45a049;
+        }
+        .cart button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .confirmation-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Our Plushie Shop!</h1>
-    <div class="product">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXfgrDg5FvxZqmSOj612vp-wFH57sKfn98SA&usqp=CAU" alt="Crocheted Penguin">
-        <div class="product-title">Crocheted Penguin</div>
-        <form id="orderForm" onsubmit="submitOrder(event)">
-            <label for="phone">Your Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required>
-            <input type="hidden" id="product" name="product" value="Crocheted Penguin">
-            <button type="submit">Buy Now</button>
-        </form>
+    <div class="container">
+        <h1>Welcome to Our Plushie Shop!</h1>
+        
+        <div class="product" data-product="Crocheted Penguin">
+            <img src="penguin.jpg" alt="Crocheted Penguin">
+            <div class="product-info">
+                <div class="product-title">Crocheted Penguin</div>
+                <div>$15.99</div>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        
+        <div class="product" data-product="Crocheted Cat">
+            <img src="cat.jpg" alt="Crocheted Cat">
+            <div class="product-info">
+                <div class="product-title">Crocheted Cat</div>
+                <div>$12.99</div>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <!-- Cart -->
+        <div class="cart">
+            <button id="confirmOrderBtn" disabled>Confirm Order</button>
+        </div>
+
+        <!-- Confirmation Message -->
+        <div id="confirmationMessage" class="confirmation-message" style="display: none;"></div>
     </div>
 
-    <script src="scripts.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You!</title>
-</head>
-<body>
-    <h1>Thank You for Your Purchase!</h1>
-    <p id="confirmationMessage"></p>
-
     <script>
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const product = urlParams.get('product');
+        const products = document.querySelectorAll('.product');
+        const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+        const confirmationMessage = document.getElementById('confirmationMessage');
 
-        // Display confirmation message
-        const messageElement = document.getElementById('confirmationMessage');
-        messageElement.textContent = `Thank you for your purchase! We will meet you in two days at 6:00 PM to deliver your ${product}.`;
+        let cart = [];
+
+        products.forEach(product => {
+            const addToCartBtn = product.querySelector('.add-to-cart');
+            const productName = product.dataset.product;
+
+            addToCartBtn.addEventListener('click', () => {
+                cart.push(productName);
+                updateCartButton();
+            });
+        });
+
+        confirmOrderBtn.addEventListener('click', () => {
+            confirmOrder();
+        });
+
+        function updateCartButton() {
+            if (cart.length > 0) {
+                confirmOrderBtn.disabled = false;
+            } else {
+                confirmOrderBtn.disabled = true;
+            }
+        }
+
+        function confirmOrder() {
+            // Clear cart and disable button
+            cart = [];
+            updateCartButton();
+
+            // Show confirmation message
+            confirmationMessage.style.display = 'block';
+            confirmationMessage.innerHTML = `
+                <p>Your order will be ready in two days at 6:00 PM.</p>
+                <p>Please come to Funabori, Tokyo, Edogawa-ku, Sports Park.</p>
+                <p>Thank you for shopping with us!</p>
+            `;
+        }
     </script>
 </body>
 </html>
