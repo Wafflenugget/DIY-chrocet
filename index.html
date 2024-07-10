@@ -26,13 +26,15 @@
     <div class="product">
         <img src="penguin.jpg" alt="Crocheted Penguin">
         <div class="product-title">Crocheted Penguin</div>
-        <form id="orderForm" action="thankyou.html" method="POST">
+        <form id="orderForm" onsubmit="submitOrder(event)">
             <label for="phone">Your Phone Number:</label>
             <input type="tel" id="phone" name="phone" required>
             <input type="hidden" id="product" name="product" value="Crocheted Penguin">
             <button type="submit">Buy Now</button>
         </form>
     </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
 <!DOCTYPE html>
@@ -57,5 +59,3 @@
     </script>
 </body>
 </html>
-
-
